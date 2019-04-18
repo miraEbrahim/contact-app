@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ListContacts from './ListContacs'
+import './index.css'
 
 const contacts = [
   {
