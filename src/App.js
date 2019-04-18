@@ -36,7 +36,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ListContacts onDeleteContacts={this.removeContact} contacts={this.state.contacts} />
+        <ListContacts 
+          onDeleteContacts={this.removeContact} 
+           contacts={this.state.contacts} />
       </div>
     );
   }
