@@ -1,0 +1,79 @@
+three react concepts
+1) Props : allow you to pass data into your components
+2) functional components: an alternative, and more intuitive approach to creating
+    React components
+3) Controlled components: Allow you to hook up the forms in your
+    application to your component state
+
+
+the way to build a large react application is by building a bunch
+of smaller React components and then composing them together
+
+Basic user functiona 
+to fetch specific user by adding a parameter 
+to our function definition and by passing in the user name 
+when the function is invoked
+
+function fetchUser(username) {
+    //ajax call
+}
+
+fetchUser('john')
+
+<user />
+here above we have a very basic React Component whos whole purpus
+is to display a user to the UI
+ we need a way to pass the user component a username , so to know which user to display to the view
+ to do that we can add a custom attribute to our component and give it a value
+ <user username='John' />
+ Now, we can access that value from the inside of our component definition
+ by using this.props.username 
+in fact any attribute that are added to a component will be
+accessible on the prop's object from inside of that component
+ class User extents React.Component {
+     render(){
+         return (
+            <div>
+                <p> Username: {this.props.username} </p>
+                <p> Is Friend?: {this.props.friend}</p>
+             </div>
+         )
+     }
+ }
+
+ <User username='John' friend={true}/>
+
+ ///////////////
+ we will make our first components , going to recive these contacts and 
+ going to display those to our view, we can have state living instead of
+ our app file
+ but all we have to do just like we would pass an argument to a function,
+ we can pass these contacts to our new component that we r goung to create
+
+ make a new file 'src/ListContacts.js' its a component which list our contacts
+
+ import React, {Component} from 'react'
+
+//the point of this ContactList compenent is to map over each of 
+these contacts and for each one its going to display a specific contact
+to the view
+we need to do 2 things:
+1) we need to render our lists contacts components
+2) when render it we need to make sure that we pass it this contact's array
+
+so lets import our list contacts component
+ class ListContacts extends Component {
+    //the only property on our component class that we alwayse have to specift  
+    render(){
+        return (
+
+            //specift the specific UI for this component
+            //return an ordered list
+            <ol className='contact-list'>
+            
+            </ol>
+        )
+    }
+ }
+
+ export default ListContacts
