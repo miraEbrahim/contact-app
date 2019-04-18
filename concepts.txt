@@ -87,3 +87,114 @@ we could access contacs array by doing somthing like this:
 after render(){ and before return on the ListContacts.js we type the following
 console.log('props', this.props)
 props is an object that has one property on it which is contacts array that lives inside our app.js file
+
+Passing Data With Props Recap
+A prop is any input that you pass to a React component. Just like an HTML attribute, a prop name and value are added to the Component.
+
+// passing a prop to a component
+<LogoutButton text='Wanna log out?' />
+In the code above, text is the prop and the string 'Wanna log out?' is the value.
+
+All props are stored on the this.props object. So to access this text prop from inside the component, we'd use this.props.text:
+
+// access the prop inside the component
+...
+render() {
+    return <div>{this.props.text}</div>
+}
+...
+Stateless Functional Components Recap
+If your component does not keep track of internal state (i.e., all it really has is just a render() method), you can declare the component as a Stateless Functional Component.
+
+Remember that at the end of the day, React components are really just JavaScript functions that return HTML for rendering. As such, the following two examples of a simple Email component are equivalent:
+
+class Email extends React.Component {
+  render() {
+    return (
+      <div>
+        {this.props.text}
+      </div>
+    );
+  }
+};
+const Email = (props) => (
+  <div>
+    {props.text}
+  </div>
+);
+In the latter example (written as an ES6 function with an implicit return), rather than accessing props from this.props, we can pass in props directly as an argument to the function itself. In turn, this regular JavaScript function can serve as the Email component's render() method.
+
+Further Research
+Functional Components vs. Stateless Functional Components vs. Stateless Components from Tyler
+
+State
+Earlier in this Lesson, we learned that props refer to attributes from parent components. In the end, props represent "read-only" data that are immutable.
+
+A component's state, on the other hand, represents mutable data that ultimately affects what is rendered on the page. State is managed internally by the component itself and is meant to change over time, commonly due to user input (e.g., clicking on a button on the page).
+
+In this section, we'll see how we can encapsulate the complexity of state management to individual components
+
+Class Fields 💡
+In the code above, we put the state object directly inside the class...not in a constructor() method!
+
+class User extends React.Component {
+  state = {
+    username: 'Tyler'
+  } 
+}
+
+// rather than
+
+class User extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      username: 'Tyler'
+    }
+  }
+}
+This is slightly different from Facebook's Setting the Initial State docs.
+
+Having state outside the constructor() means it is a class field, which is a proposal for a new change to the language. It currently isn't supported by JavaScript, but thanks to Babel's fantastic powers of transpiling, we can use it!
+Props in Initial State ⚠️
+When defining a component's initial state, avoid initializing that state with props. This is an error-prone anti-pattern, since state will only be initialized with props when the component is first created.
+
+this.state = {
+  user: props.user
+}
+In the above example, if props are ever updated, the current state will not change unless the component is "refreshed." Using props to produce a component's initial state also leads to duplication of data, deviating from a dependable "source of truth."
+
+State Recap
+By having a component manage its own state, any time there are changes made to that state, React will know and automatically make the necessary updates to the page.
+
+This is one of the key benefits of using React to build UI components: when it comes to re-rendering the page, we just have to think about updating state. We don't have to keep track of exactly which parts of the page change each time there are updates. We don't need to decide how we will efficiently re-render the page. React compares the previous output and new output, determines what has changed, and makes these decisions for us. This process of determining what has changed in the previous and new outputs is called Reconciliation.
+
+Further Research
+Identify Where Your State Should Live
+
+removeContact = (contact) => {
+    this.setState((state) => ({
+    //the argument passed to this function 
+    //is going to be the current state
+       
+        //return a new list of contacts and remove this specific 
+        //contact from the current state
+        //(the one in the state and needed to be removed)
+        //the reson we are passing a function to setState a nonobject
+        //is we want the next state of our component to be based
+        //on the current state
+        //below we want to the state.contacts to be the current contacts
+        //array of our state  and it allow us 'state.contacts.filter'
+        // to filter out certain items(removed) in our array 
+        //then remove the state contacts id doesnt equal the id of 
+        //the contact that was clicked on which evalute a new array
+        //the object that would be returend from setState is going to be 
+        //merged with the current state
+        contacts: state.contacts.filter((c) => c.id !== contact.id)
+    })) 
+    //or this method
+    // this.setState({
+
+    // })
+  }
+
