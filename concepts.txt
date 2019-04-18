@@ -77,3 +77,13 @@ so lets import our list contacts component
  }
 
  export default ListContacts
+
+so the next step on App.js is to pass our contacts array  down to our list contacts components
+we will do this by adding an attribute to our list contacts components on App.js
+
+<ListContacts contacts={contacts} />
+
+we could access contacs array by doing somthing like this:
+after render(){ and before return on the ListContacts.js we type the following
+console.log('props', this.props)
+props is an object that has one property on it which is contacts array that lives inside our app.js file
