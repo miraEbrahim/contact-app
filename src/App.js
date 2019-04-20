@@ -7,7 +7,6 @@ import "./index.css";
 
 class App extends Component {
   state = {
-    screen: "list", // list, create
     contacts: []
   };
   //use componentDidMount for AJAX API requests - If you need to dynamically fetch data or run an Ajax request, you should do it in componentDidMount()
@@ -27,18 +26,19 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <Route exact path="/" render={() => (
-          <ListContacts
-            contacts={this.state.contacts}
-            onDeleteContacts={this.removeContact}
-            onNavigate={() => {
-              this.setState({ screen: "create" });
-            }}
-          />
-        )}/>
-        <Route path="/create" component={CreateContact}/>
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <ListContacts
+              contacts={this.state.contacts}
+              onDeleteContacts={this.removeContact}
+            />
+          )}
+        />
+        <Route path="/create" component={CreateContact} />
       </div>
-    )
+    );
   }
 }
 
